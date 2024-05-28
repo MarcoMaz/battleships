@@ -34,10 +34,22 @@ const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
     setGrid(newGrid);
   }, [setGrid]);
 
+  const getColumnLabel = (index: number) => String.fromCharCode(65 + index);
+
   return (
     <div className={styles.container}>
+      <div className={styles['column-labels']}>
+        <div className={styles['empty-cell']}></div>
+        {Array.from({ length: GRID_SIZE }, (_, colIndex) => (
+          <div key={colIndex} className={styles['column-label']}>
+            {getColumnLabel(colIndex)}
+          </div>
+        ))}
+      </div>
+
       {grid.map((row, rowIndex) => (
         <div key={rowIndex} className={styles.row}>
+          <div className={styles['row-label']}>{rowIndex + 1}</div>
           {row.map((cell, colIndex) => (
             <div
               key={colIndex}

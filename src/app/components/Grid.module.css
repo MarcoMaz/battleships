@@ -4,6 +4,25 @@
   justify-content: center;
 }
 
+.column-labels {
+  display: flex;
+}
+
+.empty-cell,
+.column-label,
+.row-label {
+  border: 1px solid transparent;
+  height: 3rem;
+  width: 3rem;
+}
+
+.column-label,
+.row-label {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 .row {
   display: flex;
 }
