@@ -2,8 +2,8 @@
 
 import { Dispatch, FunctionComponent, SetStateAction, useEffect } from 'react';
 
-import { GridProps as GridDataProps, ShipProps } from '../types';
-import { placeShips } from '../utils';
+import { GridProps as GridDataProps, ShipProps } from '@/app/types/index';
+import { placeShips } from '@/app/utils/index';
 
 import styles from './Grid.module.css';
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from '../page';
-import { GridProps, ShipProps } from '../types';
-import { placeShips } from '../utils';
+import Home from '@/app/page';
+import { placeShips } from '@/app/utils';
+import { GridProps, ShipProps } from '@/app/types';
 
 const GRID_SIZE = 10;
 

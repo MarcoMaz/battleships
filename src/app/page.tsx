@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { GridProps } from './types';
-import Grid from './components/Grid';
+import Grid from './components/Grid/Grid';
 
 import styles from './page.module.css';
 
