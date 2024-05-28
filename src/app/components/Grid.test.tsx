@@ -18,7 +18,7 @@ const createEmptyGrid = (): GridProps =>
     .map(() =>
       Array(GRID_SIZE)
         .fill(null)
-        .map(() => ({ ship: false }))
+        .map(() => ({ ship: false, status: 'none' }))
     );
 
 describe('Grid Component', () => {

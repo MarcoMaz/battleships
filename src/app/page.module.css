@@ -1,0 +1,97 @@
+.heading,
+.coordinates,
+.message {
+  width: calc((1.5rem + 2px) * 11);
+}
+
+.heading {
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.coordinates,
+.message {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  margin: 0 auto;
+}
+
+.coordinates {
+  margin-top: 1rem;
+}
+
+.coordinates-instructions,
+.coordinates-input,
+.coordinates-button {
+  font-size: 1rem;
+}
+
+.coordinates-instructions {
+  grid-column: 2 / span 11;
+}
+
+.coordinates-input,
+.coordinates-button,
+.message-error {
+  grid-column: 2 / span 10;
+  padding: 1rem;
+}
+
+.coordinates-input,
+.coordinates-button {
+  border-radius: 1rem;
+}
+
+.coordinates-input {
+  border: 1px solid var(--color-black);
+  margin-bottom: 1rem;
+}
+
+.coordinates-button {
+  background-color: var(--color-primary-default);
+  border: 0;
+  color: var(--color-white);
+}
+
+.message-error {
+  border: 5px dashed var(--color-warning);
+  color: var(--color-warning);
+}
+
+@media (min-width: 576px) {
+  .heading,
+  .coordinates,
+  .message {
+    width: calc((3rem + 2px) * 11);
+  }
+
+  .coordinates {
+    grid-template-columns: repeat(11, 1fr);
+  }
+
+  .coordinates-instructions,
+  .coordinates-input,
+  .coordinates-button,
+  .message {
+    font-size: 1.5rem;
+  }
+
+  .coordinates-input {
+    grid-column: 2 / span 4;
+    margin-bottom: unset;
+  }
+
+  .coordinates-button {
+    grid-column: -6 / span 5;
+  }
+
+  .coordinates-button:hover {
+    background-color: var(--color-primary-hover);
+    cursor: pointer;
+  }
+
+  .coordinates-button:active {
+    background-color: var(--color-primary-active);
+  }
+}
