@@ -1,13 +1,6 @@
-.heading,
 .coordinates,
 .message {
-  width: calc((1.5rem + 2px) * 11);
-}
-
-.heading {
-  margin: 0 auto;
-  margin-bottom: 1rem;
-  text-align: center;
+  width: var(--column-width-mobile);
 }
 
 .coordinates,
@@ -60,10 +53,9 @@
 }
 
 @media (min-width: 576px) {
-  .heading,
   .coordinates,
   .message {
-    width: calc((3rem + 2px) * 11);
+    width: var(--column-width-desktop);
   }
 
   .coordinates {

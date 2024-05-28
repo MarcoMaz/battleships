@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { GridProps } from './types';
-import Grid from './components/Grid/Grid';
 
 import styles from './page.module.css';
+
+import Heading from './components/Heading/Heading';
+import Grid from './components/Grid/Grid';
 
 export default function Home() {
   const [grid, setGrid] = useState<GridProps>([]);
@@ -45,14 +47,13 @@ export default function Home() {
     }
   };
 
-  const HEADING_LABEL: string = 'Battleships';
   const COORDINATES_INSTRUCTIONS_LABEL: string = `Enter coordinates in the format: Column, Row (e.g., A5) and hit the
   button.`;
   const COORDINATES_BUTTON_LABEL: string = `HIT`;
 
   return (
     <main>
-      <h1 className={styles.heading}>{HEADING_LABEL}</h1>
+      <Heading />
       <Grid grid={grid} setGrid={setGrid} />
       <div className={styles.coordinates}>
         <p className={styles['coordinates-instructions']}>

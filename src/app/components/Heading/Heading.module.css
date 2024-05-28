@@ -1,0 +1,12 @@
+.heading {
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  text-align: center;
+  width: var(--column-width-mobile);
+}
+
+@media (min-width: 576px) {
+  .heading {
+    width: var(--column-width-desktop);
+  }
+}
