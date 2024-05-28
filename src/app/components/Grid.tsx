@@ -1,7 +1,9 @@
 'use client';
 
 import { Dispatch, FunctionComponent, SetStateAction, useEffect } from 'react';
-import { GridProps as GridDataProps, CellProps } from '../types';
+
+import { GridProps as GridDataProps, ShipProps } from '../types';
+import { placeShips } from '../utils';
 
 import styles from './Grid.module.css';
 
@@ -14,11 +16,22 @@ const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
   const GRID_SIZE: number = 10;
 
   useEffect(() => {
+    const ships: ShipProps[] = [
+      { name: 'Battleship', size: 5, count: 1 },
+      { name: 'Destroyer', size: 4, count: 2 },
+    ];
+
     const initialGrid: GridDataProps = Array(GRID_SIZE)
       .fill(null)
-      .map(() => Array(GRID_SIZE).fill(null));
+      .map(() =>
+        Array(GRID_SIZE)
+          .fill(null)
+          .map(() => ({ ship: false }))
+      );
 
-    setGrid(initialGrid);
+    const newGrid: GridDataProps = placeShips(initialGrid, ships);
+
+    setGrid(newGrid);
   }, [setGrid]);
 
   return (
@@ -26,7 +39,11 @@ const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
       {grid.map((row, rowIndex) => (
         <div key={rowIndex} className={styles.row}>
           {row.map((cell, colIndex) => (
-            <div key={colIndex} className={styles.cell} role='cell'></div>
+            <div
+              key={colIndex}
+              className={`${styles.cell} ${cell.ship ? styles.ship : ''}`}
+              role='cell'
+            ></div>
           ))}
         </div>
       ))}
