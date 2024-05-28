@@ -1,0 +1,29 @@
+.message {
+  width: var(--column-width-mobile);
+}
+
+.message {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  margin: 0 auto;
+}
+
+.message-error {
+  grid-column: 2 / span 10;
+  padding: 1rem;
+}
+
+.message-error {
+  border: 5px dashed var(--color-warning);
+  color: var(--color-warning);
+}
+
+@media (min-width: 576px) {
+  .message {
+    width: var(--column-width-desktop);
+  }
+
+  .message {
+    font-size: 1.5rem;
+  }
+}

@@ -7,6 +7,7 @@ import styles from './page.module.css';
 
 import Heading from './components/Heading/Heading';
 import Grid from './components/Grid/Grid';
+import Message from './components/Message/Message';
 
 export default function Home() {
   const [grid, setGrid] = useState<GridProps>([]);
@@ -74,11 +75,7 @@ export default function Home() {
           {COORDINATES_BUTTON_LABEL}
         </button>
       </div>
-      <div className={styles.message}>
-        {message && (
-          <p className={styles['message-error']}>{message}</p>
-        )}
-      </div>
+      <Message message={message} />
     </main>
   );
 }
