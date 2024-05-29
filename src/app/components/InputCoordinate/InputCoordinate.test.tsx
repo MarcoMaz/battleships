@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from './page';
+import Home from '@/app/page';
 
-describe('Home Component', () => {
+describe('Input Coordinate Component', () => {
   test('input validation function properly validates user input for coordinates (e.g., A1 to J10)', () => {
     render(<Home />);
 
