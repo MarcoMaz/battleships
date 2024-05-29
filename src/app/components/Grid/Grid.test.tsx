@@ -1,9 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from '@/app/page';
 import { placeShips } from '@/app/utils';
 import { GridProps, ShipProps } from '@/app/types';
+import Grid from './Grid';
 
 const GRID_SIZE = 10;
 
@@ -18,7 +19,7 @@ const createEmptyGrid = (): GridProps =>
     .map(() =>
       Array(GRID_SIZE)
         .fill(null)
-        .map(() => ({ ship: false, status: 'none' }))
+        .map(() => ({ ship: false, status: 'none', shipId: null }))
     );
 
 describe('Grid Component', () => {
@@ -184,5 +185,38 @@ describe('Grid Component', () => {
     expect(shipLengths.sort((a, b) => a - b)).toEqual(
       expectedLengths.sort((a, b) => a - b)
     );
+  });
+
+  test('should correctly mark a cell as hit', () => {
+    const gridWithHitCell = createEmptyGrid();
+    gridWithHitCell[0][0] = { ship: true, status: 'hit', shipId: 1 };
+    const setGrid = jest.fn();
+
+    render(<Grid grid={gridWithHitCell} setGrid={setGrid} />);
+
+    const hitCell = document.querySelector('[data-coordinate="A1"]');
+    expect(hitCell).toHaveClass('hit');
+  });
+
+  test('should correctly mark a cell as miss', () => {
+    const gridWithMissCell = createEmptyGrid();
+    gridWithMissCell[0][0] = { ship: false, status: 'miss', shipId: null };
+    const setGrid = jest.fn();
+
+    render(<Grid grid={gridWithMissCell} setGrid={setGrid} />);
+
+    const missCell = document.querySelector('[data-coordinate="A1"]');
+    expect(missCell).toHaveClass('miss');
+  });
+
+  test('should correctly mark a cell as sunk', () => {
+    const gridWithSunkCell = createEmptyGrid();
+    gridWithSunkCell[0][0] = { ship: false, status: 'sunk', shipId: null };
+    const setGrid = jest.fn();
+
+    render(<Grid grid={gridWithSunkCell} setGrid={setGrid} />);
+
+    const sunkCell = document.querySelector('[data-coordinate="A1"]');
+    expect(sunkCell).toHaveClass('sunk');
   });
 });

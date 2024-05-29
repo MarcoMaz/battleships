@@ -20,6 +20,25 @@ export default function Home() {
     setMessage('');
   };
 
+  const checkIfSunk = (shipId: number, grid: GridProps): boolean => {
+    for (let row of grid) {
+      for (let cell of row) {
+        if (cell.ship && cell.shipId === shipId && cell.status !== 'hit') {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const updateSunkStatus = (shipId: number, grid: GridProps): GridProps => {
+    return grid.map((row) =>
+      row.map((cell) =>
+        cell.ship && cell.shipId === shipId ? { ...cell, status: 'sunk' } : cell
+      )
+    );
+  };
+
   const handleHitButtonClick = (): void => {
     const match = inputValue.match(/^([A-J])([1-9]|10)$/);
 
@@ -28,6 +47,15 @@ export default function Home() {
       const row = parseInt(match[2]) - 1;
       if (grid[row][col].ship) {
         grid[row][col].status = 'hit';
+        const shipId = grid[row][col].shipId!;
+        if (checkIfSunk(shipId, grid)) {
+          const newGrid = updateSunkStatus(shipId, grid);
+          setGrid(newGrid);
+          setMessage(`Ship sunk at position: ${match[0]}`);
+        } else {
+          setGrid([...grid]);
+          setMessage(`Ship hit at position: ${match[0]}`);
+        }
       } else {
         grid[row][col].status = 'miss';
         setGrid([...grid]);

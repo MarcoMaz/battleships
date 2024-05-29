@@ -6,6 +6,7 @@
   --color-primary-active: #0a58ca;
   --color-success: #198754;
   --color-warning: #dc3545;
+  --color-sunk: #992199;
   --column-width-mobile: calc((1.5rem + 2px) * 11);
   --column-width-desktop: calc((3rem + 2px) * 11);
 }

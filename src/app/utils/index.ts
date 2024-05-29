@@ -3,7 +3,7 @@ import { GridProps, ShipProps } from '../types';
 export const placeShips = (grid: GridProps, ships: ShipProps[]): GridProps => {
   // Create a new grid initialized with no ships
   const newGrid: GridProps = grid.map((row) =>
-    row.map(() => ({ ship: false }))
+    row.map(() => ({ ship: false, status: 'none', shipId: null  }))
   );
 
   // Function to get a random integer between 0 and max - 1
@@ -41,18 +41,22 @@ export const placeShips = (grid: GridProps, ships: ShipProps[]): GridProps => {
     row: number,
     col: number,
     size: number,
-    direction: 'horizontal' | 'vertical'
+    direction: 'horizontal' | 'vertical',
+    shipId: number
   ): void => {
     for (let i = 0; i < size; i++) {
       if (direction === 'horizontal') {
         newGrid[row][col + i].ship = true;
+        newGrid[row][col + i].shipId = shipId;
       } else {
         newGrid[row + i][col].ship = true;
+        newGrid[row + i][col].shipId = shipId;
       }
     }
   };
 
   // Iterate over each ship and place them on the grid
+  let shipId = 0;
   ships.forEach((ship) => {
     for (let i = 0; i < ship.count; i++) {
       let placed = false;
@@ -61,10 +65,11 @@ export const placeShips = (grid: GridProps, ships: ShipProps[]): GridProps => {
           Math.random() < 0.5 ? 'horizontal' : 'vertical';
         const [row, col] = getRandomPosition();
         if (canPlaceShip(row, col, ship.size, direction)) {
-          placeShip(row, col, ship.size, direction);
+          placeShip(row, col, ship.size, direction, shipId);
           placed = true;
         }
       }
+      shipId++;
     }
   });
 

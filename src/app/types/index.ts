@@ -1,6 +1,7 @@
 export type CellProps = {
   ship: boolean;
-  status: 'none' | 'hit' | 'miss';
+  status: 'none' | 'hit' | 'miss' | 'sunk';
+  shipId: number | null;
 };
 
 export type GridProps = CellProps[][];

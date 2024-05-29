@@ -34,7 +34,8 @@
   justify-content: center;
 }
 
-.none {
+.none,
+.ship {
   background-color: var(--color-white);
 }
 
@@ -44,6 +45,10 @@
 
 .miss {
   background-color: var(--color-black);
+}
+
+.sunk {
+  background: var(--color-sunk);
 }
 
 @media (min-width: 576px) {

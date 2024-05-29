@@ -26,7 +26,7 @@ const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
       .map(() =>
         Array(GRID_SIZE)
           .fill(null)
-          .map(() => ({ ship: false, status: 'none' }))
+          .map(() => ({ ship: false, status: 'none', shipId: null }))
       );
 
     const newGrid: GridDataProps = placeShips(initialGrid, ships);
@@ -57,6 +57,7 @@ const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
                 cell.status ? styles[cell.status] : ''
               }`}
               role='cell'
+              data-coordinate={`${getColumnLabel(colIndex)}${rowIndex + 1}`}
             ></div>
           ))}
         </div>
