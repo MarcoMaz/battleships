@@ -2,6 +2,19 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from '@/app/page';
+import { GridProps } from '@/app/types';
+import Grid from '../Grid/Grid';
+
+const GRID_SIZE = 10;
+
+const createEmptyGrid = (): GridProps =>
+  Array(GRID_SIZE)
+    .fill(null)
+    .map(() =>
+      Array(GRID_SIZE)
+        .fill(null)
+        .map(() => ({ ship: false, status: 'none', shipId: null }))
+    );
 
 describe('Input Coordinate Component', () => {
   test('input validation function properly validates user input for coordinates (e.g., A1 to J10)', () => {
@@ -62,5 +75,23 @@ describe('Input Coordinate Component', () => {
     fireEvent.click(button);
 
     expect(screen.getByText(/miss at position/i)).toBeInTheDocument();
+  });
+
+  test('re-typing coordinate of a sunk ship does not change its status', () => {
+    const gridWithHitCell = createEmptyGrid();
+    gridWithHitCell[0][0] = { ship: true, status: 'sunk', shipId: 1 };
+    const setGrid = jest.fn();
+
+    render(<Grid grid={gridWithHitCell} setGrid={setGrid} />);
+    render(<Home />);
+
+    const input = screen.getByPlaceholderText('Enter value');
+    const button = screen.getByText('HIT');
+
+    fireEvent.change(input, { target: { value: 'A1' } });
+    fireEvent.click(button);
+    
+    const hitCell = document.querySelector('[data-coordinate="A1"]');
+    expect(hitCell).toHaveClass('sunk');
   });
 });

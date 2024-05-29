@@ -53,20 +53,24 @@ export default function Home() {
       const col = match[1].charCodeAt(0) - 'A'.charCodeAt(0);
       const row = parseInt(match[2]) - 1;
       if (grid[row][col].ship) {
-        grid[row][col].status = 'hit';
-        const shipId = grid[row][col].shipId!;
-        if (checkIfSunk(shipId, grid)) {
-          const newGrid = updateSunkStatus(shipId, grid);
-          setGrid(newGrid);
-          if (checkGameOver(newGrid)) {
-            setIsGameOver(true);
-            setMessage('Game over! All ships are sunk.');
-          } else {
-            setMessage(`Ship sunk at position: ${match[0]}`);
-          }
+        if (grid[row][col].status === 'sunk') {
+          setMessage(`Ship already sunk at position: ${match[0]}`);
         } else {
-          setGrid([...grid]);
-          setMessage(`Ship hit at position: ${match[0]}`);
+          grid[row][col].status = 'hit';
+          const shipId = grid[row][col].shipId!;
+          if (checkIfSunk(shipId, grid)) {
+            const newGrid = updateSunkStatus(shipId, grid);
+            setGrid(newGrid);
+            if (checkGameOver(newGrid)) {
+              setIsGameOver(true);
+              setMessage('Game over! All ships are sunk.');
+            } else {
+              setMessage(`Ship sunk at position: ${match[0]}`);
+            }
+          } else {
+            setGrid([...grid]);
+            setMessage(`Ship hit at position: ${match[0]}`);
+          }
         }
       } else {
         grid[row][col].status = 'miss';
@@ -78,7 +82,7 @@ export default function Home() {
     }
     setInputValue('');
   };
-
+  
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
