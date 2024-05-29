@@ -63,4 +63,12 @@
   .coordinates-button:active {
     background-color: var(--color-primary-active);
   }
+
+  .coordinates-input:disabled,
+  .coordinates-button:disabled,
+  .coordinates-button:hover:disabled {
+    background-color: var(--color-disabled-back);
+    color: var(--color-disabled-front);
+    cursor: not-allowed;
+  }
 }

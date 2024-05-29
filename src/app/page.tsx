@@ -12,6 +12,7 @@ export default function Home() {
   const [grid, setGrid] = useState<GridProps>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -39,9 +40,15 @@ export default function Home() {
     );
   };
 
+  const checkGameOver = (grid: GridProps): boolean => {
+    return grid.every((row) =>
+      row.every((cell) => !cell.ship || cell.status === 'sunk')
+    );
+  };
+
+
   const handleHitButtonClick = (): void => {
     const match = inputValue.match(/^([A-J])([1-9]|10)$/);
-
     if (match) {
       const col = match[1].charCodeAt(0) - 'A'.charCodeAt(0);
       const row = parseInt(match[2]) - 1;
@@ -51,7 +58,12 @@ export default function Home() {
         if (checkIfSunk(shipId, grid)) {
           const newGrid = updateSunkStatus(shipId, grid);
           setGrid(newGrid);
-          setMessage(`Ship sunk at position: ${match[0]}`);
+          if (checkGameOver(newGrid)) {
+            setIsGameOver(true);
+            setMessage('Game over! All ships are sunk.');
+          } else {
+            setMessage(`Ship sunk at position: ${match[0]}`);
+          }
         } else {
           setGrid([...grid]);
           setMessage(`Ship hit at position: ${match[0]}`);
@@ -62,7 +74,7 @@ export default function Home() {
         setMessage(`Miss at position: ${match[0]}`);
       }
     } else {
-      setMessage('Invalid input format');
+      setMessage(`Invalid input format`);
     }
     setInputValue('');
   };
@@ -81,6 +93,7 @@ export default function Home() {
       <Grid grid={grid} setGrid={setGrid} />
       <InputCoordinate
         inputValue={inputValue}
+        isGameOver={isGameOver}
         handleInputChange={handleInputChange}
         handleHitButtonClick={handleHitButtonClick}
         handleKeyDown={handleKeyDown}

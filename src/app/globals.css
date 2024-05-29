@@ -4,6 +4,8 @@
   --color-primary-default: #0d6efd;
   --color-primary-hover: #0b5ed7;
   --color-primary-active: #0a58ca;
+  --color-disabled-back: #c7bfbf;
+  --color-disabled-front: #757575;
   --color-success: #198754;
   --color-warning: #dc3545;
   --color-sunk: #992199;

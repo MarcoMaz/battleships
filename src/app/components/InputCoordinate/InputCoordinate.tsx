@@ -4,6 +4,7 @@ import styles from './InputCoordinate.module.css';
 
 type InputCoordinateComponentProps = {
   inputValue: string;
+  isGameOver: boolean;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   handleHitButtonClick: () => void;
@@ -11,6 +12,7 @@ type InputCoordinateComponentProps = {
 
 const InputCoordinate: FunctionComponent<InputCoordinateComponentProps> = ({
   inputValue,
+  isGameOver,
   handleInputChange,
   handleKeyDown,
   handleHitButtonClick,
@@ -31,10 +33,12 @@ const InputCoordinate: FunctionComponent<InputCoordinateComponentProps> = ({
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder='Enter value'
+        disabled={isGameOver}
       />
       <button
         className={styles['coordinates-button']}
         onClick={handleHitButtonClick}
+        disabled={isGameOver}
       >
         {COORDINATES_BUTTON_LABEL}
       </button>
