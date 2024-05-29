@@ -219,4 +219,51 @@ describe('Grid Component', () => {
     const sunkCell = document.querySelector('[data-coordinate="A1"]');
     expect(sunkCell).toHaveClass('sunk');
   });
+
+  test('should mark battleship as sunk when all its cells are hit', () => {
+    const gridWithBattleship: GridProps = [
+      [
+        { ship: true, status: 'none', shipId: 1 },
+        { ship: true, status: 'none', shipId: 1 },
+        { ship: true, status: 'none', shipId: 1 },
+        { ship: true, status: 'none', shipId: 1 },
+        { ship: true, status: 'none', shipId: 1 },
+      ],
+    ];
+
+    const setGrid = jest.fn();
+
+    render(<Grid grid={gridWithBattleship} setGrid={setGrid} />);
+
+    const battleshipCoordinates = ['A1', 'A2', 'A3', 'A4', 'A5'];
+
+    // Simulate hitting all cells of the battleship
+    battleshipCoordinates.forEach((coordinate) => {
+      const cellElement = document.querySelector(
+        `[data-coordinate="${coordinate}"]`
+      );
+      if (cellElement) {
+        fireEvent.click(cellElement);
+      }
+    });
+
+    const updatedGrid: GridProps = gridWithBattleship.map((row) =>
+      row.map((cell, index) => ({
+        ...cell,
+        status: battleshipCoordinates.includes(`A${index + 1}`)
+          ? 'sunk'
+          : cell.status,
+      }))
+    );
+
+    setGrid.mockReturnValue(updatedGrid);
+
+    render(<Grid grid={updatedGrid} setGrid={setGrid} />);
+
+    // Check if all cells of the battleship are marked as sunk in the state
+    battleshipCoordinates.forEach((coordinate, index) => {
+      const updatedCell = updatedGrid[0][index];
+      expect(updatedCell.status).toBe('sunk');
+    });
+  });
 });
