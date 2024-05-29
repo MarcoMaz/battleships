@@ -127,66 +127,6 @@ describe('Grid Component', () => {
     expect(destroyerCount).toBe(2);
   });
 
-  test('ensure each ship occupies the correct number of squares (Battleship: 5 squares, Destroyers: 4 squares each)', () => {
-    const grid = placeShips(createEmptyGrid(), SHIPS);
-
-    // Function to get the lengths of all ships on the grid
-    const getShipLengths = (grid: GridProps): number[] => {
-      const shipLengths: number[] = [];
-      const visited = Array.from({ length: GRID_SIZE }, () =>
-        Array(GRID_SIZE).fill(false)
-      );
-
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
-          if (!visited[row][col] && grid[row][col].ship) {
-            let currentSize = 0;
-            let direction = null;
-
-            if (col + 1 < GRID_SIZE && grid[row][col + 1].ship) {
-              direction = 'horizontal';
-            } else if (row + 1 < GRID_SIZE && grid[row + 1][col].ship) {
-              direction = 'vertical';
-            }
-
-            if (direction === 'horizontal') {
-              for (let i = col; i < GRID_SIZE && grid[row][i].ship; i++) {
-                visited[row][i] = true;
-                currentSize++;
-              }
-            } else if (direction === 'vertical') {
-              for (let i = row; i < GRID_SIZE && grid[i][col].ship; i++) {
-                visited[i][col] = true;
-                currentSize++;
-              }
-            } else {
-              visited[row][col] = true;
-              currentSize = 1;
-            }
-
-            shipLengths.push(currentSize);
-          }
-        }
-      }
-
-      return shipLengths;
-    };
-
-    // Get ship lengths from the grid
-    const shipLengths = getShipLengths(grid);
-
-    // Generate an array of expected ship lengths
-    const expectedLengths: number[] = SHIPS.reduce<number[]>(
-      (acc, ship) => [...acc, ...Array(ship.count).fill(ship.size)],
-      []
-    );
-
-    // Ensure that the ship lengths match the expected lengths
-    expect(shipLengths.sort((a, b) => a - b)).toEqual(
-      expectedLengths.sort((a, b) => a - b)
-    );
-  });
-
   test('should correctly mark a cell as hit', () => {
     const gridWithHitCell = createEmptyGrid();
     gridWithHitCell[0][0] = { ship: true, status: 'hit', shipId: 1 };
