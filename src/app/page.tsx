@@ -47,7 +47,9 @@ export default function Home() {
   };
 
   const handleHitButtonClick = (): void => {
+    // Match the format Column (letters) and Row (numbers)
     const match = inputValue.match(/^([A-J])([1-9]|10)$/);
+
     if (match) {
       const col = match[1].charCodeAt(0) - 'A'.charCodeAt(0);
       const row = parseInt(match[2]) - 1;
