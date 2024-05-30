@@ -10,11 +10,16 @@
   --color-warning: #dc3545;
   --color-sunk: #992199;
   --column-width-mobile: calc((1.5rem + 2px) * 11);
-  --column-width-desktop: calc((3rem + 2px) * 11);
+  --column-width-desktop: calc((2.5rem + 2px) * 11);
+  --column-width-lg: calc((3rem + 2px) * 11);
 }
 
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+p {
+  margin: 0;
 }

@@ -10,3 +10,10 @@
     width: var(--column-width-desktop);
   }
 }
+
+@media (min-width: 1200px) {
+  .heading {
+    font-size: 2.5rem;
+    width: var(--column-width-lg);
+  }
+}

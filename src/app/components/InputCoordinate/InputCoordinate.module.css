@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-bottom: 0.5rem;
   width: var(--column-width-mobile);
 }
 
@@ -14,6 +14,7 @@
 
 .coordinates-instructions {
   grid-column: 2 / span 11;
+  margin-bottom: 0.5rem;
 }
 
 .coordinates-input,
@@ -37,13 +38,18 @@
 @media (min-width: 576px) {
   .coordinates {
     grid-template-columns: repeat(11, 1fr);
+    margin-bottom: 0.75rem;
     width: var(--column-width-desktop);
   }
 
   .coordinates-instructions,
   .coordinates-input,
   .coordinates-button {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .coordinates-instructions {
+    margin-bottom: 0.5rem;
   }
 
   .coordinates-input {
@@ -70,5 +76,22 @@
     background-color: var(--color-disabled-back);
     color: var(--color-disabled-front);
     cursor: not-allowed;
+  }
+}
+
+@media (min-width: 1200px) {
+  .coordinates {
+    margin-bottom: 1rem;
+    width: var(--column-width-lg);
+  }
+
+  .coordinates-instructions {
+    margin-bottom: 1rem;
+  }
+
+  .coordinates-instructions,
+  .coordinates-input,
+  .coordinates-button {
+    font-size: 1.5rem;
   }
 }

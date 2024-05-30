@@ -1,5 +1,6 @@
 .container {
   margin: 0 auto;
+  margin-bottom: 0.5rem;
   width: min-content;
 }
 
@@ -52,6 +53,24 @@
 }
 
 @media (min-width: 576px) {
+  .container {
+    margin-bottom: 0.75rem;
+  }
+
+  .empty-cell,
+  .column-label,
+  .row-label,
+  .cell {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    margin-bottom: 1rem;
+  }
+
   .empty-cell,
   .column-label,
   .row-label,
