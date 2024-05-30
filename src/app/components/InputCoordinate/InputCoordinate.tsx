@@ -3,6 +3,8 @@ import { ChangeEvent, FunctionComponent } from 'react';
 import styles from './InputCoordinate.module.css';
 
 type InputCoordinateComponentProps = {
+  coordinatesInstructionsLabel: string;
+  coordinatesButtonLabel: string;
   inputValue: string;
   isGameOver: boolean;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -11,20 +13,18 @@ type InputCoordinateComponentProps = {
 };
 
 const InputCoordinate: FunctionComponent<InputCoordinateComponentProps> = ({
+  coordinatesInstructionsLabel,
+  coordinatesButtonLabel,
   inputValue,
   isGameOver,
   handleInputChange,
   handleKeyDown,
   handleHitButtonClick,
 }) => {
-  const COORDINATES_INSTRUCTIONS_LABEL: string = `Enter coordinates in the format: Column, Row (e.g., A5) and hit the
-  button.`;
-  const COORDINATES_BUTTON_LABEL: string = `HIT`;
-
   return (
     <div className={styles.coordinates}>
       <p className={styles['coordinates-instructions']}>
-        {COORDINATES_INSTRUCTIONS_LABEL}
+        {coordinatesInstructionsLabel}
       </p>
       <input
         className={styles['coordinates-input']}
@@ -40,7 +40,7 @@ const InputCoordinate: FunctionComponent<InputCoordinateComponentProps> = ({
         onClick={handleHitButtonClick}
         disabled={isGameOver}
       >
-        {COORDINATES_BUTTON_LABEL}
+        {coordinatesButtonLabel}
       </button>
     </div>
   );

@@ -46,7 +46,6 @@ export default function Home() {
     );
   };
 
-
   const handleHitButtonClick = (): void => {
     const match = inputValue.match(/^([A-J])([1-9]|10)$/);
     if (match) {
@@ -82,7 +81,7 @@ export default function Home() {
     }
     setInputValue('');
   };
-  
+
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
@@ -93,9 +92,12 @@ export default function Home() {
 
   return (
     <main>
-      <Heading />
+      <Heading label='Battleships' />
       <Grid grid={grid} setGrid={setGrid} />
       <InputCoordinate
+        coordinatesInstructionsLabel='Enter coordinates in the format: Column, Row (e.g., A5) and hit the
+      button.'
+        coordinatesButtonLabel='HIT'
         inputValue={inputValue}
         isGameOver={isGameOver}
         handleInputChange={handleInputChange}
