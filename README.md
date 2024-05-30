@@ -1,12 +1,15 @@
 # Battleships
 
+## Live version
+https://luxury-entremet-370533.netlify.app/
+
 ## Description
 This project is a simple version of the game Battleships, developed as a technical challenge. It allows a single human player to play a one-sided game of Battleships against ships placed randomly by the computer.
 
 The game features a 10x10 grid with the following ships placed at random:
+- 1x Battleship (5 squares)
+- 2x Destroyers (4 squares each)
 
-1x Battleship (5 squares)
-2x Destroyers (4 squares each)
 The player inputs coordinates in the form "A5" to target a square. The game provides feedback on hits, misses, and sinks, and ends when all ships are sunk.
 
 The project is implemented using:
