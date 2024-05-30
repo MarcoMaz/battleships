@@ -12,19 +12,19 @@ type GridComponentProps = {
   setGrid: Dispatch<SetStateAction<GridDataProps>>;
 };
 
+export const gridSize: number = 10;
+
+export const ships: ShipProps[] = [
+  { name: 'Battleship', size: 5, count: 1 },
+  { name: 'Destroyer', size: 4, count: 2 },
+];
+
 const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
-  const GRID_SIZE: number = 10;
-
   useEffect(() => {
-    const ships: ShipProps[] = [
-      { name: 'Battleship', size: 5, count: 1 },
-      { name: 'Destroyer', size: 4, count: 2 },
-    ];
-
-    const initialGrid: GridDataProps = Array(GRID_SIZE)
+    const initialGrid: GridDataProps = Array(gridSize)
       .fill(null)
       .map(() =>
-        Array(GRID_SIZE)
+        Array(gridSize)
           .fill(null)
           .map(() => ({ ship: false, status: 'none', shipId: null }))
       );
@@ -40,7 +40,7 @@ const Grid: FunctionComponent<GridComponentProps> = ({ grid, setGrid }) => {
     <div className={styles.container}>
       <div className={styles['column-labels']}>
         <div className={styles['empty-cell']}></div>
-        {Array.from({ length: GRID_SIZE }, (_, colIndex) => (
+        {Array.from({ length: gridSize }, (_, colIndex) => (
           <div key={colIndex} className={styles['column-label']}>
             {getColumnLabel(colIndex)}
           </div>

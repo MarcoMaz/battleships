@@ -17,6 +17,17 @@ const createEmptyGrid = (): GridProps =>
     );
 
 describe('Input Coordinate Component', () => {
+  const testInvalidInput = (inputValue: string) => {
+    const input = screen.getByPlaceholderText('Enter value');
+    const button = screen.getByText('HIT');
+
+    fireEvent.change(input, { target: { value: inputValue } });
+    fireEvent.click(button);
+
+    expect(input).toHaveValue('');
+    expect(screen.getByText('Invalid input format')).toBeInTheDocument();
+  };
+
   test('input validation function properly validates user input for coordinates (e.g., A1 to J10)', () => {
     render(<Home />);
 
@@ -38,31 +49,16 @@ describe('Input Coordinate Component', () => {
     });
 
     // Loop through each invalid input to test
-    invalidInputs.forEach((inputValue) => {
-      fireEvent.change(input, { target: { value: inputValue } });
-      fireEvent.click(button);
-
-      expect(input).toHaveValue('');
-      expect(screen.getByText('Invalid input format')).toBeInTheDocument();
-    });
+    invalidInputs.forEach(testInvalidInput);
   });
 
   test('Verify that invalid inputs are rejected with appropriate error messages', () => {
     render(<Home />);
 
-    const input = screen.getByPlaceholderText('Enter value');
-    const button = screen.getByText('HIT');
-
     const invalidInputs = ['K1', 'A0', 'J11', 'AA', '1A', '', 'Z5', 'A-1'];
 
     // Loop through each invalid input to test
-    invalidInputs.forEach((inputValue) => {
-      fireEvent.change(input, { target: { value: inputValue } });
-      fireEvent.click(button);
-
-      expect(input).toHaveValue('');
-      expect(screen.getByText('Invalid input format')).toBeInTheDocument();
-    });
+    invalidInputs.forEach(testInvalidInput);
   });
 
   test('function responsible for updating the game state based on player inputs', () => {

@@ -4,20 +4,13 @@ import '@testing-library/jest-dom';
 import Home from '@/app/page';
 import { placeShips } from '@/app/utils';
 import { GridProps, ShipProps } from '@/app/types';
-import Grid from './Grid';
-
-const GRID_SIZE = 10;
-
-const SHIPS: ShipProps[] = [
-  { name: 'Battleship', size: 5, count: 1 },
-  { name: 'Destroyer', size: 4, count: 2 },
-];
+import Grid, { gridSize, ships } from './Grid';
 
 const createEmptyGrid = (): GridProps =>
-  Array(GRID_SIZE)
+  Array(gridSize)
     .fill(null)
     .map(() =>
-      Array(GRID_SIZE)
+      Array(gridSize)
         .fill(null)
         .map(() => ({ ship: false, status: 'none', shipId: null }))
     );
@@ -27,15 +20,15 @@ describe('Grid Component', () => {
     render(<Home />);
 
     const cells = await screen.findAllByRole('cell');
-    expect(cells).toHaveLength(GRID_SIZE * GRID_SIZE);
+    expect(cells).toHaveLength(gridSize * gridSize);
   });
 
   test('ships are placed randomly on the grid without overlapping', () => {
-    const grid1 = placeShips(createEmptyGrid(), SHIPS);
-    const grid2 = placeShips(createEmptyGrid(), SHIPS);
+    const grid1 = placeShips(createEmptyGrid(), ships);
+    const grid2 = placeShips(createEmptyGrid(), ships);
 
     // Calculate the total number of ship cells expected
-    const totalShipCells = SHIPS.reduce(
+    const totalShipCells = ships.reduce(
       (acc, ship) => acc + ship.size * ship.count,
       0
     );
@@ -51,8 +44,8 @@ describe('Grid Component', () => {
 
     // Check that at least one ship position is different between the two grids
     let different = false;
-    for (let row = 0; row < GRID_SIZE; row++) {
-      for (let col = 0; col < GRID_SIZE; col++) {
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
         if (grid1[row][col].ship !== grid2[row][col].ship) {
           different = true;
           break;
@@ -72,34 +65,34 @@ describe('Grid Component', () => {
   });
 
   test('correct number of ships (1 Battleship and 2 Destroyers) are placed on the grid', () => {
-    const grid = placeShips(createEmptyGrid(), SHIPS);
+    const grid = placeShips(createEmptyGrid(), ships);
 
     // Helper function to count the number of ships of a given size
     const countShipsOfSize = (grid: GridProps, size: number): number => {
       let shipCount = 0;
-      const visited = Array.from({ length: GRID_SIZE }, () =>
-        Array(GRID_SIZE).fill(false)
+      const visited = Array.from({ length: gridSize }, () =>
+        Array(gridSize).fill(false)
       );
 
-      for (let row = 0; row < GRID_SIZE; row++) {
-        for (let col = 0; col < GRID_SIZE; col++) {
+      for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize; col++) {
           if (!visited[row][col] && grid[row][col].ship) {
             let currentSize = 0;
             let direction = null;
 
-            if (col + 1 < GRID_SIZE && grid[row][col + 1].ship) {
+            if (col + 1 < gridSize && grid[row][col + 1].ship) {
               direction = 'horizontal';
-            } else if (row + 1 < GRID_SIZE && grid[row + 1][col].ship) {
+            } else if (row + 1 < gridSize && grid[row + 1][col].ship) {
               direction = 'vertical';
             }
 
             if (direction === 'horizontal') {
-              for (let i = col; i < GRID_SIZE && grid[row][i].ship; i++) {
+              for (let i = col; i < gridSize && grid[row][i].ship; i++) {
                 visited[row][i] = true;
                 currentSize++;
               }
             } else if (direction === 'vertical') {
-              for (let i = row; i < GRID_SIZE && grid[i][col].ship; i++) {
+              for (let i = row; i < gridSize && grid[i][col].ship; i++) {
                 visited[i][col] = true;
                 currentSize++;
               }
@@ -201,7 +194,7 @@ describe('Grid Component', () => {
     render(<Grid grid={updatedGrid} setGrid={setGrid} />);
 
     // Check if all cells of the battleship are marked as sunk in the state
-    battleshipCoordinates.forEach((coordinate, index) => {
+    battleshipCoordinates.forEach((_coordinate, index) => {
       const updatedCell = updatedGrid[0][index];
       expect(updatedCell.status).toBe('sunk');
     });
